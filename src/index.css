@@ -1,0 +1,546 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================
+   HR DOCS — GLOBAL DESIGN SYSTEM
+   Clean SaaS / modern workspace aesthetic
+   ========================================================= */
+
+:root {
+  color-scheme: light;
+
+  --surface: 248 250 252;
+  --surface-raised: 255 255 255;
+  --surface-soft: 241 245 249;
+
+  --ink: 15 23 42;
+  --ink-muted: 100 116 139;
+  --ink-faint: 148 163 184;
+
+  --primary: 37 99 235;
+  --primary-dark: 29 78 216;
+  --primary-soft: 239 246 255;
+
+  --success: 16 185 129;
+  --warning: 245 158 11;
+  --danger: 239 68 68;
+
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 26px;
+
+  --shadow-soft: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-card:
+    0 1px 2px rgba(15, 23, 42, 0.03),
+    0 8px 30px rgba(15, 23, 42, 0.045);
+
+  --shadow-hover:
+    0 12px 35px rgba(15, 23, 42, 0.08);
+}
+
+:root.dark {
+  color-scheme: dark;
+
+  --surface: 10 15 27;
+  --surface-raised: 17 24 39;
+  --surface-soft: 23 32 50;
+
+  --ink: 241 245 249;
+  --ink-muted: 148 163 184;
+  --ink-faint: 100 116 139;
+
+  --primary: 96 165 250;
+  --primary-dark: 59 130 246;
+  --primary-soft: 23 37 64;
+
+  --success: 52 211 153;
+  --warning: 251 191 36;
+  --danger: 248 113 113;
+
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.2);
+
+  --shadow-card:
+    0 1px 2px rgba(0, 0, 0, 0.25),
+    0 10px 35px rgba(0, 0, 0, 0.18);
+
+  --shadow-hover:
+    0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: rgb(var(--surface));
+  color: rgb(var(--ink));
+
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  text-rendering: optimizeLegibility;
+}
+
+/* =========================================================
+   TYPOGRAPHY
+   ========================================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  color: rgb(var(--ink));
+  letter-spacing: -0.025em;
+}
+
+p {
+  margin-top: 0;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+/* =========================================================
+   SELECTION
+   ========================================================= */
+
+::selection {
+  background: rgb(var(--primary) / 0.16);
+  color: rgb(var(--ink));
+}
+
+/* =========================================================
+   FOCUS
+   ========================================================= */
+
+:focus-visible {
+  outline: 2px solid rgb(var(--primary));
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--ink-faint) / 0.35) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgb(var(--ink-faint) / 0.3);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--ink-faint) / 0.5);
+}
+
+/* =========================================================
+   BUTTON FOUNDATION
+   ========================================================= */
+
+button {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    opacity 160ms ease;
+}
+
+button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+/* =========================================================
+   FORM ELEMENTS
+   ========================================================= */
+
+input,
+textarea,
+select {
+  color: rgb(var(--ink));
+  background: rgb(var(--surface-raised));
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgb(var(--ink-faint));
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================================================
+   REUSABLE DESIGN CLASSES
+   These can be used by individual pages/components later.
+   ========================================================= */
+
+.hr-surface {
+  background: rgb(var(--surface));
+  color: rgb(var(--ink));
+}
+
+.hr-surface-raised {
+  background: rgb(var(--surface-raised));
+  color: rgb(var(--ink));
+}
+
+.hr-soft {
+  background: rgb(var(--surface-soft));
+}
+
+.hr-card {
+  background: rgb(var(--surface-raised));
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+}
+
+.hr-card-hover {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.hr-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.hr-muted {
+  color: rgb(var(--ink-muted));
+}
+
+.hr-faint {
+  color: rgb(var(--ink-faint));
+}
+
+/* =========================================================
+   MODERN BUTTONS
+   ========================================================= */
+
+.hr-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  min-height: 40px;
+  padding: 0 16px;
+
+  border: 0;
+  border-radius: 12px;
+
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.hr-btn-primary {
+  background: rgb(var(--primary));
+  color: white;
+  box-shadow: 0 5px 16px rgb(var(--primary) / 0.18);
+}
+
+.hr-btn-primary:hover {
+  background: rgb(var(--primary-dark));
+  box-shadow: 0 8px 22px rgb(var(--primary) / 0.25);
+  transform: translateY(-1px);
+}
+
+.hr-btn-secondary {
+  background: rgb(var(--surface-soft));
+  color: rgb(var(--ink));
+}
+
+.hr-btn-secondary:hover {
+  background: rgb(var(--ink-faint) / 0.12);
+}
+
+.hr-btn-ghost {
+  background: transparent;
+  color: rgb(var(--ink-muted));
+}
+
+.hr-btn-ghost:hover {
+  background: rgb(var(--ink-faint) / 0.1);
+  color: rgb(var(--ink));
+}
+
+.hr-btn-danger {
+  background: rgb(var(--danger) / 0.09);
+  color: rgb(var(--danger));
+}
+
+.hr-btn-danger:hover {
+  background: rgb(var(--danger) / 0.14);
+}
+
+/* =========================================================
+   MODERN INPUT
+   ========================================================= */
+
+.hr-input {
+  width: 100%;
+  min-height: 44px;
+
+  padding: 0 14px;
+
+  border: 1px solid rgb(var(--ink-faint) / 0.22);
+  border-radius: 12px;
+
+  background: rgb(var(--surface-raised));
+  color: rgb(var(--ink));
+
+  font-size: 14px;
+
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.hr-input:hover {
+  border-color: rgb(var(--ink-faint) / 0.4);
+}
+
+.hr-input:focus {
+  border-color: rgb(var(--primary));
+  box-shadow: 0 0 0 4px rgb(var(--primary) / 0.1);
+}
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+
+.hr-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  min-height: 26px;
+  padding: 0 9px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.hr-badge-blue {
+  background: rgb(var(--primary) / 0.1);
+  color: rgb(var(--primary));
+}
+
+.hr-badge-green {
+  background: rgb(var(--success) / 0.1);
+  color: rgb(var(--success));
+}
+
+.hr-badge-yellow {
+  background: rgb(var(--warning) / 0.12);
+  color: rgb(var(--warning));
+}
+
+.hr-badge-red {
+  background: rgb(var(--danger) / 0.1);
+  color: rgb(var(--danger));
+}
+
+/* =========================================================
+   PAGE TRANSITIONS
+   ========================================================= */
+
+@keyframes hr-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hr-enter {
+  animation: hr-fade-up 320ms ease both;
+}
+
+@keyframes hr-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.hr-fade {
+  animation: hr-fade 220ms ease both;
+}
+
+/* Backward compatibility with existing components */
+@keyframes dl-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dl-enter {
+  animation: dl-fade-up 0.3s ease both;
+}
+
+/* =========================================================
+   DOCX PREVIEW
+   ========================================================= */
+
+.docx-preview-container {
+  background: #fff;
+  overflow: auto;
+  max-height: 720px;
+  border-radius: 16px;
+}
+
+.docx-preview-container .docx-wrapper {
+  background: transparent;
+  padding: 0 !important;
+}
+
+.docx-preview-container section.docx {
+  margin: 0 auto 16px auto !important;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.14) !important;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  .hr-card {
+    border-radius: 20px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =========================================================
+   PRINT
+   ========================================================= */
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #print-root,
+  #print-root * {
+    visibility: visible;
+  }
+
+  #print-root {
+    position: absolute;
+    inset: 0;
+    background: #fff;
+  }
+}
