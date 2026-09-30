@@ -59,58 +59,37 @@ export default function OfferLetterGenerator() {
   const [busy, setBusy] = useState(false)
 
   useEffect(() => {
-    let cancelled = false
+    const employeeId = searchParams.get('employeeId')
 
-    async function loadEmployee() {
-      const employeeId = searchParams.get('employeeId')
+    if (!employeeId) return
 
-      if (!employeeId) return
+    const existing = getEmployee(employeeId)
 
-      try {
-        const existing = await getEmployee(employeeId)
+    if (!existing) return
 
-        if (!existing || cancelled) return
+    setEmployee(existing)
 
-        setEmployee(existing)
-
-        const savedSalary =
-          existing.salary ?? existing.salaryProfile
-
-        if (savedSalary) {
-          setSalary({
-            ...emptySalaryInput(),
-            ...savedSalary,
-            additionalEarnings:
-              Array.isArray(savedSalary.additionalEarnings)
-                ? savedSalary.additionalEarnings
-                : [],
-            additionalDeductions:
-              Array.isArray(savedSalary.additionalDeductions)
-                ? savedSalary.additionalDeductions
-                : [],
-          })
-        } else {
-          setSalary(emptySalaryInput())
-        }
-      } catch (err) {
-        if (!cancelled) {
-          notify(
-            describeError(
-              err,
-              'Could not load the selected employee.'
-            ),
-            'error'
+    if (existing.salaryProfile) {
+      setSalary({
+        ...emptySalaryInput(),
+        ...existing.salaryProfile,
+        additionalEarnings:
+          Array.isArray(
+            existing.salaryProfile.additionalEarnings
           )
-        }
-      }
+            ? existing.salaryProfile.additionalEarnings
+            : [],
+        additionalDeductions:
+          Array.isArray(
+            existing.salaryProfile.additionalDeductions
+          )
+            ? existing.salaryProfile.additionalDeductions
+            : [],
+      })
+    } else {
+      setSalary(emptySalaryInput())
     }
-
-    loadEmployee()
-
-    return () => {
-      cancelled = true
-    }
-  }, [searchParams, notify])
+  }, [searchParams])
 
   function runValidation() {
     const errs = mergeErrors(
@@ -182,7 +161,7 @@ export default function OfferLetterGenerator() {
       const employeeToSave = {
         ...employee,
 
-        salary: {
+        salaryProfile: {
           ...emptySalaryInput(),
           ...salary,
 
@@ -203,7 +182,7 @@ export default function OfferLetterGenerator() {
       }
 
       const savedEmployee =
-        await saveEmployee(employeeToSave)
+        saveEmployee(employeeToSave)
 
       setEmployee(savedEmployee)
 
@@ -257,7 +236,7 @@ export default function OfferLetterGenerator() {
   }
 
   return (
-    <div className="space-y-7">
+    <div className="min-h-full space-y-7 pb-16">
       {/* Page heading */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
@@ -277,7 +256,10 @@ export default function OfferLetterGenerator() {
         </div>
 
         <div className="hidden items-center gap-2 text-xs font-medium text-slate-400 sm:flex">
-          <CheckCircle2 size={15} className="text-emerald-500" />
+          <CheckCircle2
+            size={15}
+            className="text-emerald-500"
+          />
           DOCX output
         </div>
       </div>
@@ -347,7 +329,7 @@ export default function OfferLetterGenerator() {
           </Section>
 
           {/* Actions */}
-          <div className="flex flex-col gap-3 pt-1 sm:flex-row">
+          <div className="flex flex-col gap-3 border-t border-slate-200/80 pt-6 dark:border-slate-800 sm:flex-row">
             <ActionButton
               icon={Eye}
               label="Preview Offer Letter"
@@ -374,7 +356,7 @@ export default function OfferLetterGenerator() {
         </div>
 
         {/* Preview */}
-        <div className="min-w-0 xl:sticky xl:top-6">
+        <div className="min-w-0 self-start xl:sticky xl:top-6">
           <div className="h-[calc(100vh-170px)] min-h-[620px] max-h-[900px]">
             <DocumentPreview
               blob={blob}
@@ -394,7 +376,7 @@ function Section({
   children,
 }) {
   return (
-    <section className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200/70 dark:bg-slate-900 dark:ring-slate-800/80 sm:p-6">
+    <section className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200/70 transition-shadow duration-200 dark:bg-slate-900 dark:ring-slate-800/80 sm:p-6">
       <div className="mb-6 flex gap-3">
         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-xs font-bold text-blue-600 dark:bg-blue-500/10 dark:text-blue-400">
           {step}

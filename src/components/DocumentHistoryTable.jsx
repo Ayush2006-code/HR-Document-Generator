@@ -28,8 +28,8 @@ function formatDate(iso) {
 }
 
 const REGENERATE_PATH = {
-  offer: '/generate/offer',
-  appointment: '/generate/appointment',
+  offer: '/generate/offer-letter',
+  appointment: '/generate/appointment-letter',
   salary_slip: '/generate/salary-slip',
 }
 

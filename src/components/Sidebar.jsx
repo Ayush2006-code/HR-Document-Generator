@@ -15,11 +15,32 @@ import {
 import { useAuth } from '../context/AuthContext.jsx'
 
 const NAV_ITEMS = [
-  { to: '/', label: 'Dashboard', icon: LayoutDashboard, end: true },
-  { to: '/employees', label: 'Employees', icon: Users },
-  { to: '/history', label: 'Document History', icon: History },
-  { to: '/templates', label: 'Templates', icon: FileStack },
-  { to: '/settings', label: 'Settings', icon: Settings },
+  {
+    to: '/',
+    label: 'Dashboard',
+    icon: LayoutDashboard,
+    end: true,
+  },
+  {
+    to: '/employees',
+    label: 'Employees',
+    icon: Users,
+  },
+  {
+    to: '/history',
+    label: 'Document History',
+    icon: History,
+  },
+  {
+    to: '/templates',
+    label: 'Templates',
+    icon: FileStack,
+  },
+  {
+    to: '/settings',
+    label: 'Settings',
+    icon: Settings,
+  },
 ]
 
 export default function Sidebar({ mobileOpen, onClose }) {
@@ -42,22 +63,27 @@ export default function Sidebar({ mobileOpen, onClose }) {
   }
 
   const email = user?.email || ''
-  const emailInitial = email ? email.charAt(0).toUpperCase() : 'U'
+  const emailInitial = email
+    ? email.charAt(0).toUpperCase()
+    : 'U'
 
   const content = (
-    <div className="flex h-full flex-col bg-white dark:bg-slate-950">
-
+    <div className="flex h-full min-h-0 flex-col bg-white dark:bg-slate-950">
       {/* Brand */}
-      <div className="flex h-[76px] shrink-0 items-center px-6">
+      <div className="flex h-[76px] shrink-0 items-center border-b border-slate-100 px-6 dark:border-slate-800">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white shadow-lg shadow-blue-600/20">
-            <FileSignature size={20} strokeWidth={2} />
+            <FileSignature
+              size={20}
+              strokeWidth={2}
+            />
           </div>
 
           <div>
             <div className="text-[15px] font-bold tracking-tight text-slate-900 dark:text-white">
               HR Docs
             </div>
+
             <div className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.14em] text-slate-400">
               Workspace
             </div>
@@ -75,12 +101,12 @@ export default function Sidebar({ mobileOpen, onClose }) {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto px-4 py-5">
+      <nav className="flex-1 min-h-0 overflow-y-auto px-4 py-7">
         <p className="mb-3 px-3 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
           Workspace
         </p>
 
-        <div className="space-y-1">
+        <div className="space-y-1.5">
           {NAV_ITEMS.map((item) => (
             <NavLink
               key={item.to}
@@ -106,10 +132,15 @@ export default function Sidebar({ mobileOpen, onClose }) {
                         : 'bg-transparent text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200',
                     ].join(' ')}
                   >
-                    <item.icon size={17} strokeWidth={isActive ? 2.2 : 1.9} />
+                    <item.icon
+                      size={17}
+                      strokeWidth={isActive ? 2.2 : 1.9}
+                    />
                   </span>
 
-                  <span className="flex-1">{item.label}</span>
+                  <span className="flex-1">
+                    {item.label}
+                  </span>
 
                   <ChevronRight
                     size={15}
@@ -128,10 +159,10 @@ export default function Sidebar({ mobileOpen, onClose }) {
       </nav>
 
       {/* Account */}
-      <div className="shrink-0 px-4 pb-4">
-        <div className="rounded-2xl bg-slate-50 p-3 dark:bg-slate-900">
+      <div className="shrink-0 border-t border-slate-100 px-4 pb-5 pt-4 dark:border-slate-800">
+        <div className="rounded-2xl bg-slate-50 p-3.5 dark:bg-slate-900">
           {email && (
-            <div className="mb-3 flex items-center gap-3 px-1">
+            <div className="mb-3.5 flex items-center gap-3 px-1">
               <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-blue-700 dark:bg-blue-500/15 dark:text-blue-400">
                 {emailInitial}
               </div>
@@ -159,21 +190,28 @@ export default function Sidebar({ mobileOpen, onClose }) {
           >
             <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-white text-slate-400 dark:bg-slate-800">
               {signingOut ? (
-                <Loader2 size={15} className="animate-spin" />
+                <Loader2
+                  size={15}
+                  className="animate-spin"
+                />
               ) : (
                 <LogOut size={15} />
               )}
             </span>
 
-            <span>{signingOut ? 'Signing out...' : 'Log out'}</span>
+            <span>
+              {signingOut
+                ? 'Signing out...'
+                : 'Log out'}
+            </span>
           </button>
         </div>
 
-        <p className="px-2 pt-4 text-[10px] font-medium text-slate-400">
-          HR Document Generator
+        <div className="px-2 pt-4 text-[10px] font-medium text-slate-400">
+          <span>HR Document Generator</span>
           <span className="mx-1.5">•</span>
-          v1.0
-        </p>
+          <span>v1.0</span>
+        </div>
       </div>
     </div>
   )
@@ -181,7 +219,7 @@ export default function Sidebar({ mobileOpen, onClose }) {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="hidden h-screen w-[272px] shrink-0 md:block">
+      <aside className="hidden h-screen w-[272px] shrink-0 border-r border-slate-100 md:block dark:border-slate-800">
         {content}
       </aside>
 

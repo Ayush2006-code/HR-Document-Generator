@@ -9,13 +9,13 @@ import {
 
 const CARDS = [
   {
-    to: '/generate/offer',
+    to: '/generate/offer-letter',
     icon: FileSignature,
     title: 'Offer Letter',
     body: 'Generate an offer letter with its salary Annexure filled in automatically.',
   },
   {
-    to: '/generate/appointment',
+    to: '/generate/appointment-letter',
     icon: ClipboardCheck,
     title: 'Appointment Letter',
     body: 'Generate an appointment letter with its salary Annexure-I filled in automatically.',

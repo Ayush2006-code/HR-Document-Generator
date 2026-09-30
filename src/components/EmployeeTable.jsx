@@ -149,11 +149,6 @@ export default function EmployeeTable({
       setErrors({})
       closeGenerateMenu()
 
-      /*
-       * Pass the saved employee when the parent supports it.
-       * Existing callers that only expect onChanged() continue
-       * to work because the argument is optional.
-       */
       await onChanged?.(savedEmployee)
     } catch (err) {
       notify(
@@ -174,7 +169,7 @@ export default function EmployeeTable({
       : 'this employee'
 
     const confirmed = window.confirm(
-      `Are you sure you want to delete ${employeeName}?\n\nThis will remove the employee from Employee Master.`
+      `Are you sure you want to delete ${employeeName}\n\nThis will remove the employee from Employee Master.`
     )
 
     if (!confirmed) {
@@ -193,7 +188,10 @@ export default function EmployeeTable({
         setErrors({})
       }
 
-      notify('Employee removed successfully.', 'success')
+      notify(
+        'Employee removed successfully.',
+        'success'
+      )
 
       await onChanged?.(employee)
     } catch (err) {
@@ -228,8 +226,22 @@ export default function EmployeeTable({
     closeGenerateMenu()
   }
 
+  /*
+   * Employee -> Generate -> Document
+   *
+   * The employee ID is passed through the URL so the
+   * generator can automatically load the saved employee.
+   */
   function handleGenerate(employee, path) {
     closeGenerateMenu()
+
+    if (!employee?.id) {
+      notify(
+        'This employee does not have a valid ID.',
+        'error'
+      )
+      return
+    }
 
     navigate(
       `${path}?employeeId=${encodeURIComponent(
@@ -454,7 +466,9 @@ export default function EmployeeTable({
                             onClick={() =>
                               handleEdit(employee)
                             }
-                            disabled={deletingId === employee.id}
+                            disabled={
+                              deletingId === employee.id
+                            }
                             className="flex h-8 items-center gap-1.5 rounded-lg px-2.5 text-xs font-medium text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-50 dark:hover:bg-slate-800 dark:hover:text-white"
                             title="Edit"
                           >
@@ -467,7 +481,9 @@ export default function EmployeeTable({
                             onClick={() =>
                               handleDuplicate(employee)
                             }
-                            disabled={deletingId === employee.id}
+                            disabled={
+                              deletingId === employee.id
+                            }
                             className="flex h-8 items-center gap-1.5 rounded-lg px-2.5 text-xs font-medium text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-50 dark:hover:bg-slate-800 dark:hover:text-white"
                             title="Duplicate"
                           >
@@ -483,7 +499,9 @@ export default function EmployeeTable({
                                 event
                               )
                             }
-                            disabled={deletingId === employee.id}
+                            disabled={
+                              deletingId === employee.id
+                            }
                             className="flex h-8 items-center gap-1.5 rounded-lg px-2.5 text-xs font-semibold text-blue-600 transition-colors hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-50 dark:text-blue-400 dark:hover:bg-blue-500/10"
                             title="Generate document"
                           >
@@ -690,7 +708,7 @@ export default function EmployeeTable({
                     onClick={() =>
                       handleGenerate(
                         employee,
-                        '/generate/offer'
+                        '/generate/offer-letter'
                       )
                     }
                     className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-left text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
@@ -707,7 +725,7 @@ export default function EmployeeTable({
                     onClick={() =>
                       handleGenerate(
                         employee,
-                        '/generate/appointment'
+                        '/generate/appointment-letter'
                       )
                     }
                     className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-left text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
